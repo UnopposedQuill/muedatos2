@@ -1,57 +1,63 @@
--- tablas independientes
 
-CREATE TABLE dbo.Producto(
-	idProducto INT IDENTITY (1,1) Primary Key,
-	nombreProducto varchar(30) NOT NULL,
-	descripcionProducto varchar(MAX) NOT NULL,
-	fotoProducto varchar(MAX) NOT NULL,
-	precioProducto float NOT NULL
+-- crear la base de datos
+create database Taller;
+go
+
+-- usar la base de datos
+use Taller;
+go
+
+-- tablas independientes
+create table dbo.Envio(
+	id int primary key identity,
+	idSucursal int not null,
+	fechaEnvio date not null
+);
+
+create table dbo.Producto(
+	id int identity (1,1) primary key,
+	nombre varchar(30) not null,
+	descripcion varchar(max) not null,
+	foto varchar(max) not null,
+	precio float not null
 );
 -- nota: IDENTITY (1,1) es el equivalente a auto_increment en SQL Server
 
-CREATE TABLE dbo.Puesto(
-	idPuesto INT IDENTITY (1,1) Primary key,
-	descripcionPuesto varchar(30) NOT NULL
+create table dbo.Puesto(
+	id int identity (1,1) primary key,
+	descripcion varchar(30) not null
 );
 
 -- tablas dependientes
 
-CREATE TABLE dbo.EnvioSucursal(
-	idEnvio INT IDENTITY (1,1) Primary Key,
-	idProducto INT NOT NULL,
-	fechaEnvio DATE NOT NULL,
-	precioProducto float NOT NULL,
-	idSucursal int NOT NULL,
-	CONSTRAINT FK_Envio_X_Producto
-		FOREIGN KEY (idProducto)
-		REFERENCES dbo.Producto (idProducto)
+create table dbo.Lote(
+	id int identity primary key,
+	cantidad int,
+	precioProducto float not null,
+	idEnvio int not null constraint FK_Colaboradores_X_Envio foreign key (idEnvio) references dbo.Envio (id),
+	idProducto int not null constraint FK_Lote_X_Producto foreign key (idProducto) references dbo.Producto (id)
 );
 
 -- nota: falta particionar el registro idSucursal
 
-CREATE TABLE dbo.Empleado(
-	idEmpleado INT IDENTITY (1,1) Primary Key,
-	idPuesto INT NOT NULL,
-	nombreEmpleado varchar(30) NOT NULL,
-	apellidoEmpleado varchar(30) NOT NULL,
-	fechaContratacion DATE NOT NULL,
-	foto varchar(MAX) NOT NULL,
-	salarioEmpleado float NOT NULL,
-	CONSTRAINT FK_Empleado_X_Puesto
-		FOREIGN KEY (idPuesto)
-		REFERENCES dbo.Puesto (idPuesto)
+create table dbo.Empleado(
+	id int identity (1,1) primary key,
+	nombre varchar(30) not null,
+	apellido varchar(30) not null,
+	fechaContratacion date not null,
+	foto varchar(MAX) not null,
+	salario float not null,
+	idPuesto int not null constraint FK_Empleado_X_Puesto foreign key (idPuesto) references dbo.Puesto (id)
 );
 
 -- tablas de transicion
 
-CREATE TABLE dbo.ColaboradorProducto(
-	idColab_Prod INT IDENTITY(1,1) Primary Key,
-	idEmpleado INT NOT NULL,
-	idEnvio INT NOT NULL,
-	CONSTRAINT FK_Colaboradores_X_Empleado
-		FOREIGN KEY (idEmpleado)
-		REFERENCES dbo.Empleado (idEmpleado),
-	CONSTRAINT FK_Colaboradores_X_Envio
-		FOREIGN KEY (idEnvio)
-		REFERENCES dbo.EnvioSucursal (idEnvio)
+create table dbo.ColaboradorProducto(
+	id int identity(1,1) primary key,
+	idProducto int not null constraint FK_Colaboradores_X_Producto foreign key (idProducto) references dbo.Producto (id),
+	idEmpleado int not null constraint FK_Colaboradores_X_Empleado foreign key (idEmpleado) references dbo.Empleado (id)
 );
+go
+
+use master;
+go
