@@ -9,6 +9,7 @@ CREATE TABLE dbo.Producto (
 	existencias INT NOT NULL,
 	precioActual FLOAT NOT NULL
 );
+ALTER TABLE dbo.Producto ADD descripcion VARCHAR(MAX) NOT NULL, foto VARCHAR(MAX) NOT NULL, nombre VARCHAR(30) NOT NULL;
 
 CREATE TABLE dbo.Cliente (
 	idCliente INT PRIMARY KEY IDENTITY(1,1),
