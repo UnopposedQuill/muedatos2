@@ -1,16 +1,16 @@
-insert into Correo (idCliente, correo, descripcion) values (1, 'bwhiley0@sphinn.com', 'Correo personal');
-insert into Correo (idCliente, correo, descripcion) values (2, 'abeesey1@meetup.com', 'Correo personal');
-insert into Correo (idCliente, correo, descripcion) values (3, 'ebygate2@163.com', 'Correo personal');
-insert into Correo (idCliente, correo, descripcion) values (4, 'pkienl3@creativecommons.org', 'Correo personal');
-insert into Correo (idCliente, correo, descripcion) values (5, 'lkeelinge4@sfgate.com', 'Correo personal');
-insert into Correo (idCliente, correo, descripcion) values (6, 'mecclesall5@123-reg.co.uk', 'Correo personal');
-insert into Correo (idCliente, correo, descripcion) values (7, 'ucornelius6@1688.com', 'Correo personal');
-insert into Correo (idCliente, correo, descripcion) values (8, 'cvelareal7@about.me', 'Correo personal');
-insert into Correo (idCliente, correo, descripcion) values (9, 'gsushams8@chicagotribune.com', 'Correo personal');
-insert into Correo (idCliente, correo, descripcion) values (10, 'bshadwick9@slashdot.org', 'Correo personal');
-insert into Correo (idCliente, correo, descripcion) values (11, 'estibbsa@mit.edu', 'Correo personal');
-insert into Correo (idCliente, correo, descripcion) values (12, 'bweirb@theguardian.com', 'Correo personal');
-insert into Correo (idCliente, correo, descripcion) values (13, 'btippellc@accuweather.com', 'Correo personal');
-insert into Correo (idCliente, correo, descripcion) values (14, 'ntrewarthad@msu.edu', 'Correo personal');
-insert into Correo (idCliente, correo, descripcion) values (15, 'smiroye@weibo.com', 'Correo personal');
-insert into Correo (idCliente, correo, descripcion) values (16, 'dblondinf@slate.com', 'Correo personal');
+insert into Correo (idCliente, correo, descripcion) values (1, 'bwhiley0@sphinn.com', 'Correo personal'),
+(2, 'abeesey1@meetup.com', 'Correo personal'),
+(3, 'ebygate2@163.com', 'Correo personal'),
+(4, 'pkienl3@creativecommons.org', 'Correo personal'),
+(5, 'lkeelinge4@sfgate.com', 'Correo personal'),
+(6, 'mecclesall5@123-reg.co.uk', 'Correo personal'),
+(7, 'ucornelius6@1688.com', 'Correo personal'),
+(8, 'cvelareal7@about.me', 'Correo personal'),
+(9, 'gsushams8@chicagotribune.com', 'Correo personal'),
+(10, 'bshadwick9@slashdot.org', 'Correo personal'),
+(11, 'estibbsa@mit.edu', 'Correo personal'),
+(12, 'bweirb@theguardian.com', 'Correo personal'),
+(13, 'btippellc@accuweather.com', 'Correo personal'),
+(14, 'ntrewarthad@msu.edu', 'Correo personal'),
+(15, 'smiroye@weibo.com', 'Correo personal'),
+(16, 'dblondinf@slate.com', 'Correo personal');
