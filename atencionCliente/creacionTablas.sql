@@ -4,7 +4,9 @@ Create table Cliente (
 	id int AUTO_INCREMENT primary key,
     nombre varchar(20),
     apellidos varchar(20),
-    fechaNacimiento date
+    fechaNacimiento date,
+    usuario varchar(30),
+    pass varchar(20)
 );
 
 create table Cupon (
