@@ -1,35 +1,35 @@
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (22, 1);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (22, 8);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (24, 11);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (10, 1);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (19, 7);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (19, 4);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (25, 11);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (3, 1);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (1, 15);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (9, 8);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (24, 9);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (8, 5);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (20, 11);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (25, 2);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (12, 7);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (10, 12);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (3, 1);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (18, 12);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (4, 12);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (18, 6);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (22, 10);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (7, 11);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (10, 10);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (17, 2);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (6, 5);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (22, 14);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (25, 4);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (25, 9);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (5, 4);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (20, 2);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (14, 12);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (3, 14);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (19, 6);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (17, 10);
-insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (11, 5);
+insert into dbo.ColaboradorProducto (idProducto, idEmpleado) values (22, 1),
+(22, 8),
+(24, 11),
+(10, 1),
+(19, 7),
+(19, 4),
+(25, 11),
+(3, 1),
+(1, 15),
+(9, 8),
+(24, 9),
+(8, 5),
+(20, 11),
+(25, 2),
+(12, 7),
+(10, 12),
+(3, 1),
+(18, 12),
+(4, 12),
+(18, 6),
+(22, 10),
+(7, 11),
+(10, 10),
+(17, 2),
+(6, 5),
+(22, 14),
+(25, 4),
+(25, 9),
+(5, 4),
+(20, 2),
+(14, 12),
+(3, 14),
+(19, 6),
+(17, 10),
+(11, 5);
