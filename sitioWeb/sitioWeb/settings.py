@@ -76,13 +76,16 @@ WSGI_APPLICATION = 'sitioWeb.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'sql_server.pyodbc',
-        'NAME': 'SQLServer',
-        'HOST':'',
-        'PORT':'',
-        'USER':'',
-        'PASSWORD':'',
-    }
+        'NAME': 'Taller',
+        'USER': 'sa',
+        'PASSWORD': 'mueDatos2',
+        'HOST': 'localhost',
+        'PORT': '',
 
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',
+        },
+    },
 }
 
 
