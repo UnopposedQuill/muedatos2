@@ -1,3 +1,5 @@
+use master
+go
 
 -- crear la base de datos
 create database Taller;
