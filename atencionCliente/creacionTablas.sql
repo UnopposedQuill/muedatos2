@@ -1,3 +1,5 @@
+create database AtencionCliente;
+
 use AtencionCliente;
 
 Create table Cliente (

@@ -1,3 +1,4 @@
+use atencioncliente;
 
 insert into Cliente (nombre, apellidos, fechaNacimiento,usuario,pass) values 
 ('Rutherford', 'Giacomozzo', '1996-02-27','usuario1','pass123'),
@@ -14,8 +15,7 @@ insert into Cliente (nombre, apellidos, fechaNacimiento,usuario,pass) values
 ('Hamnet', 'Shedd', '1983-09-11','usuario12','pass123'),
 ('Bryant', 'Bliven', '1975-01-23','usuario13','pass123'),
 ('Vivia', 'Steckings', '2000-04-11','usuario14','pass123'),
-('Rivi', 'Rose', '1959-12-24','usuario15','pass123')
-go
+('Rivi', 'Rose', '1959-12-24','usuario15','pass123');
 
 insert into Correo (idCliente, correo, descripcion) values
 (1, 'bwhiley0@sphinn.com', 'Correo personal'),
@@ -32,9 +32,7 @@ insert into Correo (idCliente, correo, descripcion) values
 (12, 'bweirb@theguardian.com', 'Correo personal'),
 (13, 'btippellc@accuweather.com', 'Correo personal'),
 (14, 'ntrewarthad@msu.edu', 'Correo personal'),
-(15, 'smiroye@weibo.com', 'Correo personal'),
-(16, 'dblondinf@slate.com', 'Correo personal')
-go
+(15, 'smiroye@weibo.com', 'Correo personal');
 
 insert into Cupon (idCliente, idSucursal, fechaEntrega, dechaVencimiento, utilizado) values
 (15, 1, '2010-03-01', '2014-08-29', 0),
@@ -43,8 +41,7 @@ insert into Cupon (idCliente, idSucursal, fechaEntrega, dechaVencimiento, utiliz
 (16, 3, '2010-04-12', '2008-02-14', 0),
 (12, 3, '2014-08-28', '2014-09-21', 0),
 (8, 3, '2015-01-27', '2009-09-23', 1),
-(12, 1, '2014-10-15', '2012-08-09', 1)
-go
+(12, 1, '2014-10-15', '2012-08-09', 1);
 
 insert into Telefono (idCliente, telefono, descripcion) values
 (1, '(313) 4432500', 'Telefono personal'),
@@ -61,6 +58,4 @@ insert into Telefono (idCliente, telefono, descripcion) values
 (12, '(814) 9950592', 'Telefono personal'),
 (13, '(695) 5533144', 'Telefono personal'),
 (14, '(238) 7300461', 'Telefono personal'),
-(15, '(155) 4679491', 'Telefono personal'),
-(16, '(426) 3194993', 'Telefono personal')
-go
+(15, '(155) 4679491', 'Telefono personal');
