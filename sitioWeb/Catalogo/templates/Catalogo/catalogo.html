@@ -1,12 +1,38 @@
 <!DOCTYPE html>
 <html>
-{% include 'Catalogo/header.html'%}
+    <head>
+        {% include 'Catalogo/header.html'%}
+        {% include 'Catalogo/carritoManage.html'%}
+        <script>
+            let carrito={};
+            function addProd(p){
+                if(!carrito[p]) carrito[p]=0;
+                carrito[p]++;
+            }
+            function poster(){
+                document.getElementById('Ilista').value = Object.entries(carrito).flat().join(',');
+                document.formCarrito.submit();
+            }
+        </script>
+    </head>
     <body>
         <h1>CATALOGO de PRODUCTOS</h1>
-        <ul>
-            {% for producto in productos %}
-            <label>{{producto.1}} {{producto.2}} {{producto.4}}</label><br>
-            {% endfor %}
-        </ul>
+        {% for prod in productos %}
+        <div>
+            <div>
+                <label>Producto: {{prod.1}}</label>
+                <label>Precio: {{prod.4}}</label>
+                <button onclick="addProd({{prod.0}})">Agregar al Carrito</button>
+            </div>
+            <div>
+                <img src="{{prod.3}}" alt="Foto {{prod.1}}" />
+            </div>
+        </div>
+        {% endfor %}
+        <button onclick="poster()">Ver Carrito</button>
+        <form id='formCarrito' name = "formCarrito" method = 'POST' action = "{% url 'carrito' uid sid %}">
+            {% csrf_token %}
+            <input type = "hidden" name = 'carrito' id = 'Ilista' value="">
+        </form>
     </body>
 </html>

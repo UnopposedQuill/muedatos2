@@ -1,7 +1,27 @@
 <!DOCTYPE html>
 <html>
-{% include 'Catalogo/header.html'%}
+    <head>
+        {% include 'Catalogo/header.html'%}
+        {% include 'Catalogo/carritoManage.html'%}
+        <script>
+            let carrito={{carrito}};
+            function poster(){
+                document.getElementById('Ilista').value = Object.entries(carrito).flat().join(',');
+                document.formCarrito.submit();
+            }
+        </script>
+    </head>
     <body>
-CARRITO DE COMPRA
+    <h1>CARRITO DE COMPRA</h1>
+    <ul>
+        {% for producto in carrito.items %}
+        <li>{{producto.0}} >> {{producto.1}}</li>
+        {% endfor %}
+    </ul>
+    <button onclick="poster()">Finalizar Compra</button>
+    <form id='formCarrito' name = "formCarrito" method = 'POST' action = "{% url 'compra' uid sid %}">
+        {% csrf_token %}
+        <input type = "hidden" name = 'carrito' id = 'Ilista' value="">
+    </form>
     </body>
 </html>

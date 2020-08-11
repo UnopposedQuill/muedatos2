@@ -125,6 +125,15 @@ DATABASES = {
             'driver': 'ODBC Driver 17 for SQL Server',
         },
     },
+    'atencionCliente': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'atencioncliente',
+        'USER': 'mabo',
+        'PASSWORD': 'mueDatos2',
+        'HOST': 'localhost',
+        'PORT': '',
+        'OPTIONS': {},
+    },
 }
 
 
