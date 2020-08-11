@@ -10,9 +10,16 @@ use Taller;
 go
 
 -- tablas independientes
+create table [dbo].[Sucursal](
+	id int identity(1,1) primary key,
+	nombre varchar(30) not null,
+	ubicacion geography not null
+);
+go
+
 create table dbo.Envio(
 	id int primary key identity,
-	idSucursal int not null,
+	idSucursal int not null constraint FK_Envio_X_Sucursal foreign  key (idSucursal) references dbo.Sucursal (id),
 	fechaEnvio date not null
 );
 
