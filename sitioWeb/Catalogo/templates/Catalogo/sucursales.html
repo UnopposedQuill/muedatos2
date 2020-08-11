@@ -2,6 +2,10 @@
 <html>
 {% include 'Catalogo/header.html'%}
     <body>
-Vamos a paris
+    <h1>Sucursales</h1>
+    <p>Aca se encuentran las sucursales disponibles ordenadas por su cercanía a usted</p>
+        {% for sucursal in sucursales %}
+        <a href="{% url 'catalogo' uid sucursal.0 %}">Sucursal {{sucursal.1}}</a><br>
+        {% endfor %}
     </body>
 </html>

@@ -2,6 +2,11 @@
 <html>
 {% include 'Catalogo/header.html'%}
     <body>
-        <p>CATALOGO de PRODUCTOS</p>
+        <h1>CATALOGO de PRODUCTOS</h1>
+        <ul>
+            {% for producto in productos %}
+            <label>{{producto.1}} {{producto.2}} {{producto.4}}</label><br>
+            {% endfor %}
+        </ul>
     </body>
 </html>
