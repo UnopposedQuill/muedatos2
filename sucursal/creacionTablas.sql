@@ -15,7 +15,7 @@ CREATE TABLE dbo.Cliente (
 	idCliente INT PRIMARY KEY IDENTITY(1,1),
 	nombre varchar(30) NOT NULL,
 	apellidos varchar(30) NOT NULL,
-	ubicacion geometry NOT NULL,
+	ubicacion geography NOT NULL,
 	direccion varchar(120) NOT NULL
 );
 
