@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Muebleria Leiva</title>
+        <script>
+            let carrito=[];
+            function addProd(prod){
+                carrito.push(prod);
+                console.log(carrito);
+            }
+            function poster(){
+                document.getElementById('Ilista').value=carrito.join(',');
+                document.carrito.submit();
+            }
+        </script>
+    </head>
+    <body>
+        {% if success is False %}
+        <div>Login Fallido</div>
+        {% endif %}
+        <form action="{% url 'resolve' %}" name="Login" method="POST">
+            {% csrf_token %}
+            <label for="uid">Nombre de usuario</label>
+            <input id="uid" name="uid" type="text"><br>
+            <label for="uid">Contraseña</label>
+            <input id="uid" name="pwd" type="password"><br>
+            <input type="submit" value="Login">
+        </form>
+    </body>
+</html>

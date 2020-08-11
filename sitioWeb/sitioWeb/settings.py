@@ -31,6 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'Login.apps.LoginConfig',
+    'Compra.apps.CompraConfig',
+    'Catalogo.apps.CatalogoConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -75,13 +78,49 @@ WSGI_APPLICATION = 'sitioWeb.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+    'taller': {
         'ENGINE': 'sql_server.pyodbc',
         'NAME': 'Taller',
         'USER': 'sa',
         'PASSWORD': 'mueDatos2',
         'HOST': 'localhost',
         'PORT': '',
-
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',
+        },
+    },
+    'sucursalA': {
+        'ENGINE': 'sql_server.pyodbc',
+        'NAME': 'SucursalA',
+        'USER': 'sa',
+        'PASSWORD': 'mueDatos2',
+        'HOST': 'localhost',
+        'PORT': '',
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',
+        },
+    },
+    'sucursalB': {
+        'ENGINE': 'sql_server.pyodbc',
+        'NAME': 'SucursalB',
+        'USER': 'sa',
+        'PASSWORD': 'mueDatos2',
+        'HOST': 'localhost',
+        'PORT': '',
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',
+        },
+    },
+    'sucursalC': {
+        'ENGINE': 'sql_server.pyodbc',
+        'NAME': 'SucursalC',
+        'USER': 'sa',
+        'PASSWORD': 'mueDatos2',
+        'HOST': 'localhost',
+        'PORT': '',
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',
         },

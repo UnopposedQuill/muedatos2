@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Catalogo de productos</title>
+        <script>
+            let carrito=[];
+            function addProd(prod){
+                carrito.push(prod);
+                console.log(carrito);
+            }
+            function poster(){
+                document.getElementById('Ilista').value=carrito.join(',');
+                document.carrito.submit();
+            }
+        </script>
+    </head>
+    <body>
+        {% for prod in lista_productos %}
+        <div>
+            <div>
+                <label>Producto: {{prod.1}}</label>
+                <label>Precio: {{prod.4}}</label>
+                <button onclick="addProd({{prod.0}})">Agregar al Carrito</button>
+            </div>
+            <div>
+                <img src="{{prod.3}}" alt="Foto {{prod.1}}" />
+            </div>
+        </div>
+        {% endfor %}
+        <form action="{% url 'carrito' %}" name="carrito" method="POST">{% csrf_token %}<input type="hidden" name="lista" id="Ilista" value="loca"></form>
+        <button onclick="poster()">Ver Carrito</button>
+    </body>
+</html>
