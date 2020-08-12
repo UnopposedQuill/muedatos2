@@ -17,12 +17,6 @@ create table [dbo].[Sucursal](
 );
 go
 
-create table dbo.Envio(
-	id int primary key identity,
-	idSucursal int not null constraint FK_Envio_X_Sucursal foreign  key (idSucursal) references dbo.Sucursal (id),
-	fechaEnvio date not null
-);
-
 create table dbo.Producto(
 	id int identity (1,1) primary key,
 	nombre varchar(30) not null,
@@ -30,24 +24,26 @@ create table dbo.Producto(
 	foto varchar(max) not null,
 	precio float not null
 );
+go
 -- nota: IDENTITY (1,1) es el equivalente a auto_increment en SQL Server
 
 create table dbo.Puesto(
 	id int identity (1,1) primary key,
 	descripcion varchar(30) not null
 );
+go
 
 -- tablas dependientes
 
-create table dbo.Lote(
-	id int identity primary key,
-	cantidad int,
+create table dbo.Envio(
+	id int identity (1,1) primary key,
+	idSucursal int not null constraint FK_Envio_X_Sucursal foreign key (idSucursal) references dbo.Sucursal (id),
+	idProducto int not null constraint FK_Envio_X_Producto foreign key (idProducto) references dbo.Producto (id),
+	fechaEnvio date not null,
 	precioProducto float not null,
-	idEnvio int not null constraint FK_Colaboradores_X_Envio foreign key (idEnvio) references dbo.Envio (id),
-	idProducto int not null constraint FK_Lote_X_Producto foreign key (idProducto) references dbo.Producto (id)
+	cantidad int not null
 );
-
--- nota: falta particionar el registro idSucursal
+go
 
 create table dbo.Empleado(
 	id int identity (1,1) primary key,
@@ -58,6 +54,7 @@ create table dbo.Empleado(
 	salario float not null,
 	idPuesto int not null constraint FK_Empleado_X_Puesto foreign key (idPuesto) references dbo.Puesto (id)
 );
+go
 
 -- tablas de transicion
 
@@ -66,7 +63,4 @@ create table dbo.ColaboradorProducto(
 	idProducto int not null constraint FK_Colaboradores_X_Producto foreign key (idProducto) references dbo.Producto (id),
 	idEmpleado int not null constraint FK_Colaboradores_X_Empleado foreign key (idEmpleado) references dbo.Empleado (id)
 );
-go
-
-use master;
 go

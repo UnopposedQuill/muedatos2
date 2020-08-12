@@ -1,15 +1,17 @@
+use master;
+go
+
+create database SucursalC;
+go
+use SucursalC;
+go
+
 -- tablas independientes
 CREATE TABLE dbo.Puesto (
 	idPuesto INT PRIMARY KEY IDENTITY(1,1),
 	descripcion varchar(30) NOT NULL
 );
-
-CREATE TABLE dbo.Producto (
-	idProducto INT PRIMARY KEY IDENTITY(1,1),
-	existencias INT NOT NULL,
-	precioActual FLOAT NOT NULL
-);
-ALTER TABLE dbo.Producto ADD descripcion VARCHAR(MAX) NOT NULL, foto VARCHAR(MAX) NOT NULL, nombre VARCHAR(30) NOT NULL;
+go
 
 CREATE TABLE dbo.Cliente (
 	idCliente INT PRIMARY KEY IDENTITY(1,1),
@@ -18,6 +20,7 @@ CREATE TABLE dbo.Cliente (
 	ubicacion geography NOT NULL,
 	direccion varchar(120) NOT NULL
 );
+go
 
 -- tablas dependientes
 CREATE TABLE dbo.Empleado (
@@ -32,6 +35,7 @@ CREATE TABLE dbo.Empleado (
 		FOREIGN KEY (idPuesto)
 		REFERENCES dbo.Puesto (idPuesto)
 );
+go
 
 CREATE TABLE dbo.MetodoPago (
 	idMetodoPago INT PRIMARY KEY IDENTITY(1,1),
@@ -41,6 +45,7 @@ CREATE TABLE dbo.MetodoPago (
 		FOREIGN KEY (idCliente)
 		REFERENCES dbo.Cliente (idCliente)
 );
+go
 
 -- tablas de transicion
 CREATE TABLE dbo.Venta (
@@ -49,6 +54,7 @@ CREATE TABLE dbo.Venta (
 	idCliente INT NOT NULL,
 	idMetodoPago INT NOT NULL,
 	fechaVenta DATE NOT NULL,
+	reciboConforme XML NULL,
 	CONSTRAINT FK_Venta_Empleado
 		FOREIGN KEY (idEmpleado)
 		REFERENCES dbo.Empleado (idEmpleado),
@@ -59,6 +65,7 @@ CREATE TABLE dbo.Venta (
 		FOREIGN KEY (idMetodoPago)
 		REFERENCES dbo.MetodoPago (idMetodoPago)
 );
+go
 
 CREATE TABLE dbo.LineaVenta (
 	idLineaVenta INT PRIMARY KEY IDENTITY(1,1),
@@ -68,8 +75,8 @@ CREATE TABLE dbo.LineaVenta (
 	precio FLOAT NOT NULL,
 	CONSTRAINT FK_LineaVenta_Venta
 		FOREIGN KEY (idVenta)
-		REFERENCES dbo.Venta (idVenta),
-	CONSTRAINT FK_LineaVenta_Producto
-		FOREIGN KEY (idProducto)
-		REFERENCES dbo.Producto (idProducto)
+		REFERENCES dbo.Venta (idVenta)
+	-- en teoría deberia mantener un fk a producto, pero dicha tabla se encuentra en Taller
+	-- -- para manejar fk entre bases se deberia usar triggers, pero por ahora no me voy a preocupar por consistencia inter-bd
 );
+go

@@ -20,11 +20,12 @@ create or alter procedure spGetSucursales (
 as begin
 	declare @ubicacion geography;
 	select @ubicacion=C.ubicacion
-	from ( select idCliente,ubicacion from [SucursalA].[dbo].[Cliente] where idCliente = @uid
-	UNION ALL
-	select idCliente,ubicacion from [SucursalB].[dbo].[Cliente] where idCliente = @uid
-	UNION ALL
-	select idCliente,ubicacion from [SucursalB].[dbo].[Cliente] where idCliente = @uid
+	from (
+		select idCliente,ubicacion from [SucursalA].[dbo].[Cliente] where idCliente = @uid
+		UNION ALL
+		select idCliente,ubicacion from [SucursalB].[dbo].[Cliente] where idCliente = @uid
+		UNION ALL
+		select idCliente,ubicacion from [SucursalB].[dbo].[Cliente] where idCliente = @uid
 	) as C
 	select id,nombre
 	from [dbo].[Sucursal]
@@ -33,14 +34,12 @@ end
 go
 
 --retorna los productos de la sucursal con el id sid
---de momento retorna todos los prods del taller solo para poder probar cosas
 create or alter procedure spGetProductos (
 	@sid int
 )
 as begin
-	select *
-	from [dbo].[Producto];
-	-- la verdad hay que hacer algo con sql dinamico
-	-- obtener el nombre de la bd, y el query algo como @query = 'select * from [Sucursal'+@nombre+'].[dbo].[Productos]'; exec (@query)
+	select P.id,P.nombre,P.foto,P.descripcion,P.precio
+	from [dbo].[Envio] E inner join  [dbo].[Producto] P on P.id = E.idProducto
+	where E.idSucursal=@sid;
 end
 go
