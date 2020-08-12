@@ -27,17 +27,26 @@
             </div>
             <div>
                 <h3>Correos</h3>
-                {% for tel in correos.items %}
-                <p>{{tel.0}}: {{tel.1}}</p><br>
+                {% for cor in correos.items %}
+                <p>{{cor.0}}: {{cor.1}}</p><br>
                 {% endfor %}
             </div>
         </div>
         <div>
-            <button onclick="poster()">Facturar</button>
             <form id='formCarrito' name = "formCarrito" method = 'POST' action = "{% url 'facturar' uid sid %}">
                 {% csrf_token %}
                 <input type = "hidden" name = 'carrito' id = 'Ilista' value="">
+                <div>
+                    <h2>Metodos de Pago</h2>
+                    <div>
+                        {% for met in metodos.items %}
+                        <input type="radio" name="mid" value="{{met.0}}" id="mid{{med.0}}">
+                        <label for="mid{{met.0}}" checked>{{met.1}}</label><br>
+                        {% endfor %}
+                    </div>
+                </div>
             </form>
+            <button onclick="poster()">Facturar</button>
         </div>
     </body>
 </html>

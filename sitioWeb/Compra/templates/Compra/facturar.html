@@ -4,6 +4,11 @@
         {% include 'Catalogo/header.html'%}
     </head>
     <body>
-{% for prod in carrito.items %}<p>{{prod.0}} x{{prod.1}}</p><br>{% endfor %}
+    {% if code is 200 %}
+        <p>La compra se ha realizado de manera exitosa, puede realizar una evaluacion del producto cuando lo reciba desde la pagina principal usando el codigo {{id}}</p>
+    {% else %}
+        <p>Ha ocurrido un error en la compra, por favor vease para mas detalle</p>
+    {% endif %}
+    <div id="detalle">{{detalle}}</div>
     </body>
 </html>

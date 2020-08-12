@@ -1,9 +1,9 @@
 use master;
 go
 
-create database SucursalC;
+create database SucursalA;
 go
-use SucursalC;
+use SucursalA;
 go
 
 -- tablas independientes
