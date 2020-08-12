@@ -2,8 +2,42 @@
 <html>
     <head>
         {% include 'Catalogo/header.html'%}
+        <script>
+            let carrito={{carrito}};
+            function poster(){
+                document.getElementById('Ilista').value = Object.entries(carrito).flat().join(',');
+                document.formCarrito.submit();
+            }
+        </script>
     </head>
     <body>
-Aca se muestan los datos del usuario para que decida finalmente comprar
+        <h1>Informacion de Facturacion</h1>
+        <div>
+            <h2>Informacion Personal</h2>
+            <p>{{nombre}}</p><br>
+            <p>{{apellidos}}</p><br>
+        </div>
+        <div>
+            <h2>Informacion de Contacto</h2>
+            <div>
+                <h3>Telefonos</h3>
+                {% for tel in telefonos.items %}
+                <p>{{tel.0}}: {{tel.1}}</p><br>
+                {% endfor %}
+            </div>
+            <div>
+                <h3>Correos</h3>
+                {% for tel in correos.items %}
+                <p>{{tel.0}}: {{tel.1}}</p><br>
+                {% endfor %}
+            </div>
+        </div>
+        <div>
+            <button onclick="poster()">Facturar</button>
+            <form id='formCarrito' name = "formCarrito" method = 'POST' action = "{% url 'facturar' uid sid %}">
+                {% csrf_token %}
+                <input type = "hidden" name = 'carrito' id = 'Ilista' value="">
+            </form>
+        </div>
     </body>
 </html>

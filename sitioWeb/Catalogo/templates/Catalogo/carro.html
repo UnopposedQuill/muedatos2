@@ -14,8 +14,8 @@
     <body>
     <h1>CARRITO DE COMPRA</h1>
     <ul>
-        {% for producto in carrito.items %}
-        <li>{{producto.0}} >> {{producto.1}}</li>
+        {% for producto in detalle.items %}
+        <li>{{producto.1.0}} >> {{producto.1.1}}</li>
         {% endfor %}
     </ul>
     <button onclick="poster()">Finalizar Compra</button>

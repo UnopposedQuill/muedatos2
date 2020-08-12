@@ -4,6 +4,6 @@
         {% include 'Catalogo/header.html'%}
     </head>
     <body>
-Este es el recibo/comprobante de la bd que la compra funcionó
+{% for prod in carrito.items %}<p>{{prod.0}} x{{prod.1}}</p><br>{% endfor %}
     </body>
 </html>

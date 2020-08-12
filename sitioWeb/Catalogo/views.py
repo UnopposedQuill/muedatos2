@@ -25,7 +25,12 @@ def carrito(request,uid=0,sid=0):
     if request.method == 'POST':
         carrito = [int(x) for x in request.POST['carrito'].split(',')];
         carrito = {x:y for x,y in zip(carrito[::2],carrito[1::2])};
-        context = {'carrito':carrito,'uid':uid,'sid':sid};
+        detalle = {key:value for key, value in carrito.items()}
+        with connections['taller'].cursor() as cursor: #coneccion a taller
+            cursor.execute("EXEC [dbo].[spGetDetalleProductos] %s",[','.join(str(n) for n in list(carrito.keys()))]);
+            for row in cursor.fetchall():
+                detalle[row[0]] = [carrito[row[0]],row[1::]]
+            context = {'detalle':detalle,'carrito':carrito,'uid':uid,'sid':sid};
         return render(request,'Catalogo/carro.html',context);
     else:
         return redirect('sucursales',uid=uid,permanent=True);
