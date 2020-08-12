@@ -31,6 +31,12 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'Cliente.apps.ClienteConfig',
+    'Taller.apps.TallerConfig',
+    'SucursalA.apps.SucursalaConfig',
+    'SucursalB.apps.SucursalbConfig',
+    'SucursalC.apps.SucursalcConfig',
+    'manager.apps.ManagerConfig',
     'Login.apps.LoginConfig',
     'Compra.apps.CompraConfig',
     'Catalogo.apps.CatalogoConfig',
@@ -75,6 +81,13 @@ WSGI_APPLICATION = 'sitioWeb.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+
+DATABASE_ROUTERS = ['manager.router.DatabaseAppsRouter']
+DATABASE_APPS_MAPPING = {'Taller': 'taller', 
+                         'SucursalA':'sucursalA', 
+                         'SucursalB':'sucursalB', 
+                         'SucursalC':'sucursalC', 
+                         'Cliente':'atencionCliente'}
 
 DATABASES = {
     'default': {
@@ -130,9 +143,8 @@ DATABASES = {
         'NAME': 'atencioncliente',
         'USER': 'mabo',
         'PASSWORD': 'mueDatos2',
-        'HOST': 'localhost',
-        'PORT': '',
-        'OPTIONS': {},
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
     },
 }
 
