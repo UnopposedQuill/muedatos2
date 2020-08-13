@@ -61,14 +61,17 @@ create or alter procedure [dbo].[spGetInfoCliente](
 as begin
 	SET NOCOUNT ON
 	declare @query varchar(8000);
-	set @query = 'select * from openquery(MYSQL,''select C.id as id, T.telefono as telefono, T.descripcion as tel_descripcion, O.correo as correo, O.descripcion as cor_descripcion
+	set @query = 'select * from openquery(MYSQL,''select C.id as id, T.telefono as telefono, T.descripcion as tel_descripcion, O.correo as correo, O.descripcion as cor_descripcion, U.id as cupon, U.descripcion as cup_descripcion, U.valor as descuento
 	from cliente C
     inner join telefono T on C.id=T.idCliente
     inner join correo O on C.id=O.idCliente
+	left join (select * from cupon where utilizado=b''''0'''') U on C.id=U.idCliente
     where C.id='+CAST(@uid as varchar)+''')';
-	declare @talbe table(id int,telefono varchar(16), tel_descripcion varchar(20), correo varchar(50), cor_descripcion varchar(20));
+	declare @talbe table(id int,telefono varchar(16), tel_descripcion varchar(20), correo varchar(50), cor_descripcion varchar(20), cupon int, cup_descripcion varchar(50), descuento float);
 	insert into @talbe EXEC (@query);
-	select distinct T.id, C.nombre, C.apellidos, T.telefono, T.tel_descripcion, T.correo, T.cor_descripcion, C.ubicacionLat as Lat, C.ubicacionLong as Long, C.idMetodoPago, C.descripcion as met_descripcion
+	select DISTINCT T.id as Id, C.nombre as Nombre, C.apellidos as Apellidos, T.telefono as Telefono, T.tel_descripcion as DescripcionTelefono,
+		T.correo as Correo, T.cor_descripcion as DescripcionCorreo, C.ubicacionLat as Lat, C.ubicacionLong as Long, C.idMetodoPago as MetodoPago,
+		C.descripcion as DescripcionMetodoPago, T.cupon as Cupon, T.cup_descripcion as DescripcionCupon, T.descuento as Descuento
 	from @talbe T
 	inner join (
 		select C.idCliente,C.nombre,C.apellidos,C.ubicacionLat,C.ubicacionLong,M.idMetodoPago,M.descripcion from [SucursalA].[dbo].[Cliente] C left outer join [SucursalA].[dbo].[MetodoPago] M on M.idCliente=C.idCliente where C.idCliente = @uid
@@ -79,6 +82,7 @@ as begin
 	) as C on T.id=C.idCliente;
 end
 go
+exec spGetInfoCliente 8;
 
 create or alter procedure [dbo].[spFacturarWeb](
 	@uid int, --user id
@@ -93,14 +97,12 @@ as begin
 	-- todo esto en la bd respectiva a sid (1, 2 o 3) (hardcodeado)
 	if @sid=1
 		EXEC [SucursalA].[dbo].[spFacturar] @uid,@sid,@mid,@lista,@cip
+	else if @sid=2
+		EXEC [SucursalB].[dbo].[spFacturar] @uid,@sid,@mid,@lista,@cip
+	else if @sid=3
+		EXEC [SucursalC].[dbo].[spFacturar] @uid,@sid,@mid,@lista,@cip
 	else
-		if @sid=2
-			EXEC [SucursalB].[dbo].[spFacturar] @uid,@sid,@mid,@lista,@cip
-		else
-			if @sid=3
-				EXEC [SucursalC].[dbo].[spFacturar] @uid,@sid,@mid,@lista,@cip
-			else
-				select -1 as id, 301 as code, 'Sucursal no encontrada' as detalle
+		select -1 as id, 301 as code, 'Sucursal no encontrada' as detalle
 end
 go
 

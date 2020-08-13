@@ -7,7 +7,7 @@ Create table Cliente (
     nombre varchar(20),
     apellidos varchar(20),
     fechaNacimiento date,
-    usuario varchar(30),
+    usuario varchar(30) unique,
     pass varchar(20)
 );
 
@@ -16,8 +16,10 @@ create table Cupon (
     idCliente int ,
     idSucursal int,
     fechaEntrega date,
-    dechaVencimiento date,
-    utilizado bit,
+    fechaVencimiento date,
+    utilizado bit(1),
+    valor float,
+    descripcion varchar(50),
     foreign key(idCliente) references Cliente(id)
 );
 

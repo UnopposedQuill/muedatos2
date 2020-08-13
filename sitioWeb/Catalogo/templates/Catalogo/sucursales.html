@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html>
     <head>
-        {% include 'Catalogo/header.html'%}
+        {% include 'Login/style.html' %}
     </head>
     <body>
-    <h1>Sucursales</h1>
-    <p>Aca se encuentran las sucursales disponibles ordenadas por su cercanía a usted</p>
+    <div class="centrado">
+        <h1>Sucursales</h1>
+        <p>Aca se encuentran las sucursales disponibles ordenadas por su cercanía a usted</p>
         {% for sucursal in sucursales %}
         <a href="{% url 'catalogo' uid sucursal.0 %}">Sucursal {{sucursal.1}}</a><br>
         {% endfor %}
-    <h1>Evaluar pedido previo</h1>
-    <p>Ingrese el id de un pedido, tiene la siguiente forma <code>numero:numero</code></p>
+    </div>
+    <div class="centrado">
+        <h1>Evaluar pedido previo</h1>
+        <p>Ingrese el id de un pedido, tiene la siguiente forma <code>numero:numero</code></p>
         <form action="{% url 'evaluar' uid %}">
             <label for="vid">ID Pedido</label>
             <input type="text" name="vid" id="vid">
             <input type="submit" value="Evaluar">
         </form>
+    </div>
     </body>
 </html>

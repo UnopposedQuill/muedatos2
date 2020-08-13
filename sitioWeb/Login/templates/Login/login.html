@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        {% include 'Login/style.html' %}
         <title>Muebleria Leiva</title>
         <script>
             let carrito=[];
@@ -15,9 +16,7 @@
         </script>
     </head>
     <body>
-        {% if success is False %}
-        <div>Login Fallido</div>
-        {% endif %}
+        <div class="centrado">
         <form action="{% url 'resolve' %}" name="Login" method="POST">
             {% csrf_token %}
             <label for="uid">Nombre de usuario</label>
@@ -26,5 +25,6 @@
             <input id="uid" name="pwd" type="password"><br>
             <input type="submit" value="Login">
         </form>
+        </div>
     </body>
 </html>
