@@ -1,11 +1,12 @@
 /***********************************
-RECORDAD LA CONTRASEÑA
+RECORDAD LA CONTRASEï¿½A
 ************************************/
 
 USE [master]
 GO
 
 /****** Object:  LinkedServer [MYSQL]    Script Date: 11/8/2020 20:24:17 ******/
+-- @datasrc=N'mysql' <= Nombre del conector ODBC configurado en el origen de datos
 EXEC master.dbo.sp_addlinkedserver @server = N'MYSQL', @srvproduct=N'mysql', @provider=N'MSDASQL', @datasrc=N'mysql'
  /* For security reasons the linked server remote logins password is changed with ######## */
 EXEC master.dbo.sp_addlinkedsrvlogin @rmtsrvname=N'MYSQL',@useself=N'False',@locallogin=NULL,@rmtuser=N'root',@rmtpassword='########'
