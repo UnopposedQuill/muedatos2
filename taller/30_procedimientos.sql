@@ -156,3 +156,70 @@ as begin
 		where idVenta=@vid and idCliente=@uid
 end
 go
+
+create or alter procedure spConsultarVentas(
+	@pid int = null, @eid int = null, @sid int = null, @finicio date = null, @ffin date = null
+)
+as begin
+	declare @venta table(idSucursal int, idVenta int, idEmpleado int, idCliente int, descripcion varchar(20), fechaVenta date, reciboConforme XML, idProducto int, nombre varchar(30), precio float);
+	insert into @venta
+		select 1 as idSucursal, V.idVenta, V.idEmpleado, V.idCliente, M.descripcion, V.fechaVenta, V.reciboConforme, L.idProducto,P.nombre, L.precio
+		from [SucursalA].[dbo].[Venta] V
+		inner join [SucursalA].[dbo].[LineaVenta] L on V.idVenta = L.idVenta
+		inner join [Taller].[dbo].[Producto] P on L.idProducto=P.id
+		inner join [SucursalA].[dbo].[MetodoPago] M on V.idMetodoPago=M.idMetodoPago
+		where V.idEmpleado = ISNULL(@eid,V.idEmpleado) 
+			and L.idProducto = ISNULL(@pid,L.idProducto)
+			and V.fechaVenta BETWEEN ISNULL(@finicio,V.fechaVenta) and ISNULL(@ffin,V.fechaVenta)
+		UNION all
+		select 2 as idSucursal, V.idVenta, V.idEmpleado, V.idCliente, M.descripcion, V.fechaVenta, V.reciboConforme, L.idProducto, P.nombre, L.precio
+		from [SucursalB].[dbo].[Venta] V
+		inner join [SucursalB].[dbo].[LineaVenta] L on V.idVenta = L.idVenta
+		inner join [Taller].[dbo].[Producto] P on L.idProducto=P.id
+		inner join [SucursalB].[dbo].[MetodoPago] M on V.idMetodoPago=M.idMetodoPago
+		where V.idEmpleado = ISNULL(@eid,V.idEmpleado) 
+			and L.idProducto = ISNULL(@pid,L.idProducto)
+			and V.fechaVenta BETWEEN ISNULL(@finicio,V.fechaVenta) and ISNULL(@ffin,V.fechaVenta)
+		union all
+		select 3 as idSucursal, V.idVenta, V.idEmpleado, V.idCliente, M.descripcion, V.fechaVenta, V.reciboConforme, L.idProducto,P.nombre, L.precio
+		from [SucursalC].[dbo].[Venta] V
+		inner join [SucursalC].[dbo].[LineaVenta] L on V.idVenta = L.idVenta
+		inner join [Taller].[dbo].[Producto] P on L.idProducto=P.id
+		inner join [SucursalC].[dbo].[MetodoPago] M on V.idMetodoPago=M.idMetodoPago
+		where V.idEmpleado = ISNULL(@eid,V.idEmpleado) 
+			and L.idProducto = ISNULL(@pid,L.idProducto)
+			and V.fechaVenta BETWEEN ISNULL(@finicio,V.fechaVenta) and ISNULL(@ffin,V.fechaVenta)
+	SELECT idSucursal as Sucursal, idVenta as Venta, idEmpleado as Empleado, idCliente as Cliente, descripcion as Pago, fechaVenta as Fecha, reciboConforme as Recibo, idProducto, nombre as Producto, precio as Precio
+	FROM @venta where idSucursal = ISNULL(@sid,idSucursal)
+
+end
+go
+
+create or alter procedure spConsultarGanacias(
+	@pid int = null, @sid int = null, @finicio date = null, @ffin date = null
+)
+as begin
+	declare @venta table(idSucursal int, idVenta int, fechaVenta date, idProducto int, precio float);
+	insert into @venta
+		select 1 as idSucursal, V.idVenta, V.fechaVenta, L.idProducto, L.precio
+		from [SucursalA].[dbo].[Venta] V
+		inner join [SucursalA].[dbo].[LineaVenta] L on V.idVenta = L.idVenta
+		where L.idProducto = ISNULL(@pid,L.idProducto)
+			and V.fechaVenta BETWEEN ISNULL(@finicio,V.fechaVenta) and ISNULL(@ffin,V.fechaVenta)
+		UNION all
+		select 2 as idSucursal, V.idVenta, V.fechaVenta, L.idProducto, L.precio
+		from [SucursalB].[dbo].[Venta] V
+		inner join [SucursalB].[dbo].[LineaVenta] L on V.idVenta = L.idVenta
+		where L.idProducto = ISNULL(@pid,L.idProducto)
+			and V.fechaVenta BETWEEN ISNULL(@finicio,V.fechaVenta) and ISNULL(@ffin,V.fechaVenta)
+		union all
+		select 3 as idSucursal, V.idVenta, V.fechaVenta, L.idProducto, L.precio
+		from [SucursalC].[dbo].[Venta] V
+		inner join [SucursalC].[dbo].[LineaVenta] L on V.idVenta = L.idVenta
+		where L.idProducto = ISNULL(@pid,L.idProducto)
+			and V.fechaVenta BETWEEN ISNULL(@finicio,V.fechaVenta) and ISNULL(@ffin,V.fechaVenta)
+	SELECT idSucursal as Sucursal, idVenta as Venta, fechaVenta as Fecha, idProducto, SUM(precio) as Ganancia
+	FROM @venta where idSucursal = ISNULL(@sid,idSucursal)
+	GROUP BY ROLLUP(idSucursal, idVenta, fechaVenta, idProducto)
+end
+go
