@@ -1,8 +1,22 @@
 <!DOCTYPE html>
 <html>
     <head>
-        {% include 'Catalogo/header.html'%}
-        {% include 'Catalogo/carritoManage.html'%}
+        {% include 'Login/style.html' %}
+        <style>
+            tr:first-child{
+                border-top-left-radius: inherit;
+                border-top-right-radius: inherit;
+            }
+            tr:last-child{
+                border-bottom-left-radius: inherit;
+                border-bottom-right-radius: inherit;
+            }
+            tr{
+                padding: .75rem 1.25rem;
+                background-color: #fff;
+                border: 1px solid rgba(0,0,0,.125);
+            }
+        </style>
         <script>
             let carrito={{carrito}};
             function poster(){
@@ -12,16 +26,35 @@
         </script>
     </head>
     <body>
-    <h1>CARRITO DE COMPRA</h1>
-    <ul>
-        {% for producto in detalle.items %}
-        <li>{{producto.1.0}} >> {{producto.1.1}}</li>
-        {% endfor %}
-    </ul>
-    <button onclick="poster()">Finalizar Compra</button>
-    <form id='formCarrito' name = "formCarrito" method = 'POST' action = "{% url 'compra' uid sid %}">
-        {% csrf_token %}
-        <input type = "hidden" name = 'carrito' id = 'Ilista' value="">
-    </form>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <h1>CARRITO DE COMPRA</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <table>
+                    <thead><th>Producto</th><th>Cantidad</th><th>Precio Unitario</th></thead>
+                    <tbody>
+                    {% for id,producto in detalle.items %}
+                        <tr>
+                            <td>{{producto.nombre}}</td>
+                            <td><span class="badge badge-primary">{{producto.precio}}</span></td>
+                            <td><span class="badge badge-secondary">{{producto.cantidad}}</span></td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <label>Total a Pagar: {{total}}</label><br>
+                <button onclick="poster()" class="btn btn-primary">Finalizar Compra</button>
+            </div>
+        </div>
+    </div>
+<form id='formCarrito' name = "formCarrito" method = 'POST' action = "{% url 'compra' uid sid %}">{% csrf_token %}<input type = "hidden" name = 'carrito' id = 'Ilista' value=""></form>
     </body>
 </html>

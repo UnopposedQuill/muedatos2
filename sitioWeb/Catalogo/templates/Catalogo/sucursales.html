@@ -4,21 +4,31 @@
         {% include 'Login/style.html' %}
     </head>
     <body>
-    <div class="centrado">
-        <h1>Sucursales</h1>
-        <p>Aca se encuentran las sucursales disponibles ordenadas por su cercanía a usted</p>
-        {% for sucursal in sucursales %}
-        <a href="{% url 'catalogo' uid sucursal.0 %}">Sucursal {{sucursal.1}}</a><br>
-        {% endfor %}
-    </div>
-    <div class="centrado">
-        <h1>Evaluar pedido previo</h1>
-        <p>Ingrese el id de un pedido, tiene la siguiente forma <code>numero:numero</code></p>
-        <form action="{% url 'evaluar' uid %}">
-            <label for="vid">ID Pedido</label>
-            <input type="text" name="vid" id="vid">
-            <input type="submit" value="Evaluar">
-        </form>
+    <div class="container">
+        <div class="row">
+            <div class="col-md">
+                <div class="card">
+                    <h1 class="card-title">Sucursales</h1>
+                    <p class="card-text">Aca se encuentran las sucursales disponibles ordenadas por su cercanía a usted</p>
+                    {% for sucursal in sucursales %}
+                    <a href="{% url 'catalogo' uid sucursal.0 %}" class="btn btn-primary">Sucursal {{sucursal.1}}</a><br>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <div class="card">
+                    <h1 class="card-title">Evaluar pedido previo</h1>
+                    <p class="card-text">Ingrese el id de un pedido, tiene la siguiente forma <code>numero:numero</code></p>
+                    <form action="{% url 'evaluar' uid %}">
+                        <label for="vid" class="card-text">ID Pedido</label>
+                        <input type="text" name="vid" id="vid"><br>
+                        <input type="submit" value="Evaluar" class="btn btn-primary">
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
     </body>
 </html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        {% include 'Catalogo/header.html'%}
+        {% include 'Login/style.html' %}
         <script>
             let carrito={{carrito}};
             function poster(){
@@ -11,50 +11,75 @@
         </script>
     </head>
     <body>
-        <h1>Informacion de Facturacion</h1>
-        <div>
-            <h2>Informacion Personal</h2>
-            <p>{{nombre}} {{apellidos}}</p>
-        </div>
-        <div>
-            <h2>Informacion de Contacto</h2>
-            <div>
-                <h3>Telefonos</h3>
-                {% for tel in telefonos.items %}
-                <p>{{tel.0}}: {{tel.1}}</p>
-                {% endfor %}
-            </div>
-            <div>
-                <h3>Correos</h3>
-                {% for cor in correos.items %}
-                <p>{{cor.0}}: {{cor.1}}</p>
-                {% endfor %}
-            </div>
-        </div>
-        <div>
-            <form id='formCarrito' name = "formCarrito" method = 'POST' action = "{% url 'facturar' uid sid %}">
-                {% csrf_token %}
-                <input type = "hidden" name = 'carrito' id = 'Ilista' value="">
-                <div>
-                    <h2>Metodos de Pago</h2>
-                    <div>
-                        {% for met in metodos.items %}
-                        <input type="radio" name="mid" value="{{met.0}}" id="mid{{med.0}}">
-                        <label for="mid{{met.0}}">{{met.1}}</label>
-                        {% endfor %}
+        <div class="container">
+            <h1>Informacion de Facturacion</h1>
+            <div class="row">
+                <div class="col-sm">
+                    <div class="card">
+                        <h2 class="card-title">Informacion Personal</h2>
+                        <p class="card-text">{{nombre}} {{apellidos}}</p>
                     </div>
                 </div>
-                <div>
-                    <h2>Cupones de Descuento</h2>
-                    <div>
-                        {% for cupon in cupones.items %}
-                        <input type="radio" name="cid" value="{{cupon.0}}" id="cid{{cupon.0}}">
-                        <label for="cid{{cupon.0}}">{{cupon.1}}</label><br>
-                        {% endfor %}
+            </div>
+            <div class="row">
+                <h2>Informacion de Contacto</h2>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <div class="card">
+                        <h3 class="card-title">Telefonos</h3>
+                        <ul class="list-group">
+                            {% for tel in telefonos.items %}
+                            <li class="list-group-item">{{tel.1}} {{tel.0}}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="card">
+                        <h3 class="card-title">Correos</h3>
+                        <ul class="list-group">
+                            {% for correo in correos.items %}
+                            <li class="list-group-item">{{correo.1}} {{correo.0}}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <form id='formCarrito' name = "formCarrito" method = 'POST' action = "{% url 'facturar' uid sid %}" class="row">{% csrf_token %}<input type = "hidden" name = 'carrito' id = 'Ilista' value="">
+                <div class="col-sm">
+                    <div class="card">
+                        <h2 class="card-title">Metodos de Pago</h2>
+                        <ul class="list-group">
+                            {% for met in metodos.items %}
+                            <li class="list-group-item">
+                                <input type="radio" name="mid" value="{{met.0}}" id="mid{{med.0}}" checked>
+                                <label for="mid{{met.0}}">{{met.1}}</label>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="card">
+                        <h2 class="card-title">Cupones de Descuento</h2>
+                        <ul class="list-group">
+                            {% for cupon in cupones.items %}
+                            <li class="list-group-item">
+                                <input type="radio" name="cid" value="{{cupon.0}}" id="cid{{cupon.0}}"><label for="cid{{cupon.0}}">{{cupon.1}}</label><br>
+                            </li>
+                            {% empty %}
+                            <li class="list-group-item"> Usted no dispone de Cupones de Descuento</li>
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
             </form>
-            <button onclick="poster()">Facturar</button>
+            <div class="row">
+                <div class="col-sm">
+                    <button onclick="poster()">Facturar</button>
+                </div>
+            </div>
         </div>
     </body>
 </html>

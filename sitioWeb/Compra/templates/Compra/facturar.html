@@ -1,17 +1,34 @@
 <!DOCTYPE html>
 <html>
     <head>
-        {% include 'Catalogo/header.html'%}
+        {% include 'Login/style.html' %}
     </head>
     <body>
-    {% if code is 200 %}
-        <p>La compra se ha realizado de manera exitosa, puede realizar una evaluacion del producto cuando lo reciba desde la pagina principal usando el codigo <code>{{sid}}:{{id}}</code></p>
-    {% else %}
-        <p>Ha ocurrido un error en la compra, por favor vease para mas detalle</p>
-    {% endif %}
-    <div id="detalle">
-        <code>{{detalle}}</code>
-    </div>
-    <a href="{% url 'sucursales' uid %}">Regresar a Lista de sucursales</a>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <h1>Resultado de la compra</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    {% if code is 200 %}
+                    <p>La compra se ha realizado de manera exitosa, puede realizar una evaluacion del producto cuando lo reciba desde la pagina principal usando el codigo <code>{{sid}}:{{id}}</code></p>
+                    {% else %}
+                    <p>Ha ocurrido un error en la compra, por favor vease para mas detalle</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm" id="detalle">
+                    <code>{{detalle}}</code>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <a href="{% url 'sucursales' uid %}" class="btn btn-primary">Regresar a Lista de sucursales</a>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

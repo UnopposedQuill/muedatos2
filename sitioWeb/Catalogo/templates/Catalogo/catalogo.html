@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        {% include 'Catalogo/header.html'%}
-        {% include 'Catalogo/carritoManage.html'%}
+        {% include 'Login/style.html' %}
         <script>
             let carrito={};
             function addProd(p){
@@ -16,23 +15,56 @@
         </script>
     </head>
     <body>
-        <h1>CATALOGO de PRODUCTOS</h1>
-        {% for prod in productos %}
-        <div>
-            <div>
-                <label>Producto: {{prod.nombre}}</label>
-                <label>Precio: {{prod.precio}}</label>
-                <button onclick="addProd({{prod.id}})">Agregar al Carrito</button>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <h1>Catalogo de Productos</h1>
+                </div>
             </div>
-            <div>
-                <img src="{{prod.foto}}" alt="Foto {{prod.nombre}}" />
+            {% for x,y,z in productos %}
+            <div class="row">
+                {% if x %}
+                <div class="col-sm">
+                    <div class="card">
+                        <img src="{{x.foto}}" alt="Foto {{x.nombre}}" class="card-img-top"/>
+                        <label class="card-title"><strong>{{x.nombre}}</strong></label>
+                        <p class="card-text text-center">{{x.descripcion}}</p>
+                        <p class="card-text text-right">Precio: <span class="badge badge-primary">{{x.precio}}</span></p>
+                        <button onclick="addProd({{x.id}})">Agregar al Carrito</button>
+                    </div>
+                </div>
+                {% endif %}
+                {% if y %}
+                <div class="col-sm">
+                    <div class="card">
+                        <img src="{{y.foto}}" alt="Foto {{y.nombre}}" class="card-img-top"/>
+                        <label class="card-title"><strong>{{y.nombre}}</strong></label>
+                        <p class="card-text text-center">{{y.descripcion}}</p>
+                        <p class="card-text text-right">Precio: <span class="badge badge-primary">{{y.precio}}</span></p>
+                        <button onclick="addProd({{y.id}})">Agregar al Carrito</button>
+                    </div>
+                </div>
+                {% endif %}
+                {% if z %}
+                <div class="col-sm">
+                    <div class="card">
+                        <img src="{{z.foto}}" alt="Foto {{z.nombre}}" class="card-img-top"/>
+                        <label class="card-title"><strong>{{z.nombre}}</strong></label>
+                        <p class="card-text text-center">{{z.descripcion}}</p>
+                        <p class="card-text text-right">Precio: <span class="badge badge-primary">{{z.precio}}</span></p>
+                        <button onclick="addProd({{z.id}})">Agregar al Carrito</button>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <div class="row">
+                <div class="col-sm">
+                    <button onclick="poster()" class="btn btn-primary">Ver Carrito</button>
+                    <form id='formCarrito' name = "formCarrito" method = 'POST' action = "{% url 'carrito' uid sid %}">
+                    {% csrf_token %}<input type = "hidden" name = 'carrito' id = 'Ilista' value=""></form>
+                </div>
             </div>
         </div>
-        {% endfor %}
-        <button onclick="poster()">Ver Carrito</button>
-        <form id='formCarrito' name = "formCarrito" method = 'POST' action = "{% url 'carrito' uid sid %}">
-            {% csrf_token %}
-            <input type = "hidden" name = 'carrito' id = 'Ilista' value="">
-        </form>
     </body>
 </html>

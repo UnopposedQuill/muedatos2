@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html>
     <head>
+        {% include 'Login/style.html' %}
         <title>Evaluacion de pedido</title>
         <script>
             const load = ()=>{
                 evaluacion = "{{evaluacion}}";
                 evaluacion = evaluacion.replace(/&apos;/g, "'")
-                                       .replace(/&quot;/g, '"')
-                                       .replace(/&gt;/g, '>')
-                                       .replace(/&lt;/g, '<')
-                                       .replace(/&amp;/g, '&');
-                console.log(evaluacion);
+                                .replace(/&quot;/g, '"').replace(/&gt;/g, '>')
+                                .replace(/&lt;/g, '<').replace(/&amp;/g, '&');
                 let parser = new DOMParser();
                 evaluacion = parser.parseFromString(evaluacion,'application/xml');
-                console.log(evaluacion);
                 if(evaluacion.documentElement.nodeName=='parsererror'){
                     document.getElementById('evaluacion').innerHTML="<p>Error recuperando el detalle del pedido, por favor intente mas tarde</p>"
                 } else {
@@ -21,6 +18,8 @@
                     child.id="crearLista";
                     child.onclick=eload;
                     child.innerHTML="Evaluar Productos";
+                    child.classList.add('btn');
+                    child.classList.add('btn-primary');
                     document.getElementById('evaluacion').appendChild(child);
                 }
             }
@@ -29,6 +28,7 @@
                 document.getElementById('crearLista').style.display='none';
                 for(prod of evaluacion.getElementsByTagName('prod')){
                     let prodDiv = document.createElement('div');
+                        prodDiv.classList.add('form-group');
                     let prodN = document.createElement('input');
                         prodN.type = "hidden";
                         prodN.value = prod.childNodes[0].innerHTML;
@@ -37,6 +37,7 @@
                         prodIn.type = "text";
                         prodIn.value = prod.childNodes[1].innerHTML;
                         prodIn.id = prodIn.name = 'p'+prod.id;
+                        prodIn.classList.add('form-control');
                     let prodLabel = document.createElement('label');
                         prodLabel.innerHTML = prod.childNodes[0].innerHTML;
                         prodLabel.for = 'p'+prod.id;
@@ -48,23 +49,27 @@
                 let sub = document.createElement('input');
                 sub.type="submit";
                 sub.value="Enviar Evaluacion";
+                sub.classList.add('btn');
+                sub.classList.add('btn-primary');
                 document.getElementById('eform').appendChild(sub);
             }
         </script>
     </head>
     <body>
-        <div>
-            <h1>Evaluacion del pedido {{sid}}:{{vid}}</h1>
-            <p>ID: {{sid}}:{{vid}}</p>
-            <p>Metodo de Pago: {{metodoPago}}</p>
-            <p>Fecha: {{fecha}}</p>
-        </div>    
-        <div id="evaluacion">
-            <form action="{% url 'enviarevaluacion' uid %}" method="post" id="eform">
-                {% csrf_token %}
-                <input type="hidden" name="vid" value="{{vid}}">
-                <input type="hidden" name="sid" value="{{sid}}">
-            </form>
+    <div class="container">
+        <div class="row">
+            <div class="card">
+                <h1 class="card-title">Evaluacion del pedido</h1>
+                <p class="card-text"><strong>ID</strong> {{sid}}:{{vid}}</p>
+                <p class="card-text"><strong>Metodo de Pago</strong> {{metodoPago}}</p>
+                <p class="card-text"><strong>Fecha</strong> {{fecha}}</p>
+            </div>
         </div>
+    </div>
+    <div id="evaluacion" class="container">
+        <form action="{% url 'enviarevaluacion' uid %}" method="post" id="eform">
+            {% csrf_token %}<input type="hidden" name="vid" value="{{vid}}"><input type="hidden" name="sid" value="{{sid}}">
+        </form>
+    </div>
     </body>
 </html>

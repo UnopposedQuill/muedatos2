@@ -18,7 +18,10 @@ def catalogo(request,uid=0,sid=0):
     with connections['taller'].cursor() as cursor: #coneccion a taller
         cursor.execute("EXEC [dbo].[spGetProductos] %s",[sid]);
         colname = [col[0] for col in cursor.description];
-        context['productos'] = [dict(zip(colname,row)) for row in cursor.fetchall()];
+        rows = [dict(zip(colname,row)) for row in cursor.fetchall()];
+        context['productos'] = [(x,y,z) for x,y,z in zip(rows[::3],rows[1::3],rows[2::3])]
+        if len(rows)%3 == 1: context['productos'] += [ (rows[-1],None,None) ];
+        if len(rows)%3 == 2: context['productos'] += [ (rows[-2],rows[-1],None,None) ];
     return render(request,'Catalogo/catalogo.html',context);
 
 def carrito(request,uid=0,sid=0):
@@ -29,9 +32,13 @@ def carrito(request,uid=0,sid=0):
         detalle = {key:value for key, value in carrito.items()}
         with connections['taller'].cursor() as cursor: #coneccion a taller
             cursor.execute("EXEC [dbo].[spGetDetalleProductos] %s",[','.join(str(n) for n in list(carrito.keys()))]);
-            for row in cursor.fetchall():
-                detalle[row[0]] = [carrito[row[0]],row[1::]]
-            context = {'detalle':detalle,'carrito':carrito,'uid':uid,'sid':sid};
+            colname = [col[0] for col in cursor.description];
+            colname[0] = 'cantidad'
+            total = 0;
+            for row in cursor.fetchall(): #P.id, P.nombre, P.descripcion, P.precio
+                detalle[row[0]] = dict(zip(colname,[carrito[row[0]]]+list(row[1::])))
+                total += float(detalle[row[0]]['precio'])
+            context = {'detalle':detalle,'carrito':carrito,'uid':uid,'sid':sid,'total':total};
         return render(request,'Catalogo/carro.html',context);
     else:
         return redirect('sucursales',uid=uid,permanent=True);

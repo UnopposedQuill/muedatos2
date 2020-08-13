@@ -2,7 +2,6 @@
 <html>
     <head>
         {% include 'Login/style.html' %}
-        <title>Muebleria Leiva</title>
         <script>
             let carrito=[];
             function addProd(prod){
@@ -16,15 +15,30 @@
         </script>
     </head>
     <body>
-        <div class="centrado">
-        <form action="{% url 'resolve' %}" name="Login" method="POST">
-            {% csrf_token %}
-            <label for="uid">Nombre de usuario</label>
-            <input id="uid" name="uid" type="text"><br>
-            <label for="uid">Contraseña</label>
-            <input id="uid" name="pwd" type="password"><br>
-            <input type="submit" value="Login">
-        </form>
+        <div class="container">
+            <div class="row">
+                <div class="col-md">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="card-title">Login</h1>
+                            <form action="{% url 'resolve' %}" name="Login" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="uid" class="card-text">Nombre de usuario</label>
+                                    <input id="uid" name="uid" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="uid" class="card-text">Contraseña</label>
+                                    <input id="uid" name="pwd" type="password" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Login" class="btn btn-primary">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 </html>
