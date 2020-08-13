@@ -20,12 +20,12 @@
         {% for prod in productos %}
         <div>
             <div>
-                <label>Producto: {{prod.1}}</label>
-                <label>Precio: {{prod.4}}</label>
-                <button onclick="addProd({{prod.0}})">Agregar al Carrito</button>
+                <label>Producto: {{prod.nombre}}</label>
+                <label>Precio: {{prod.precio}}</label>
+                <button onclick="addProd({{prod.id}})">Agregar al Carrito</button>
             </div>
             <div>
-                <img src="{{prod.3}}" alt="Foto {{prod.1}}" />
+                <img src="{{prod.foto}}" alt="Foto {{prod.nombre}}" />
             </div>
         </div>
         {% endfor %}

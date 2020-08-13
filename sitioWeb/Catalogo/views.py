@@ -17,7 +17,8 @@ def catalogo(request,uid=0,sid=0):
     context = {'productos':[],'uid':uid,'sid':sid}
     with connections['taller'].cursor() as cursor: #coneccion a taller
         cursor.execute("EXEC [dbo].[spGetProductos] %s",[sid]);
-        context['productos'] = [row for row in cursor.fetchall()];
+        colname = [col[0] for col in cursor.description];
+        context['productos'] = [dict(zip(colname,row)) for row in cursor.fetchall()];
     return render(request,'Catalogo/catalogo.html',context);
 
 def carrito(request,uid=0,sid=0):
