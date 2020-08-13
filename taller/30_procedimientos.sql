@@ -19,17 +19,17 @@ create or alter procedure spGetSucursales (
 )
 as begin
 	declare @ubicacion geography;
-	select @ubicacion=C.ubicacion
+	select @ubicacion=geography::STGeomFromText('POINT('+CAST(C.ubicacionLat as VARCHAR)+' '+CAST(C.ubicacionLong as VARCHAR)+')',4326)
 	from (
-		select idCliente,ubicacion from [SucursalA].[dbo].[Cliente] where idCliente = @uid
+		select idCliente,ubicacionLat,ubicacionLong from [SucursalA].[dbo].[Cliente] where idCliente = @uid
 		UNION ALL
-		select idCliente,ubicacion from [SucursalB].[dbo].[Cliente] where idCliente = @uid
+		select idCliente,ubicacionLat,ubicacionLong from [SucursalB].[dbo].[Cliente] where idCliente = @uid
 		UNION ALL
-		select idCliente,ubicacion from [SucursalB].[dbo].[Cliente] where idCliente = @uid
+		select idCliente,ubicacionLat,ubicacionLong from [SucursalB].[dbo].[Cliente] where idCliente = @uid
 	) as C
 	select id,nombre
 	from [dbo].[Sucursal]
-	order by ubicacion.STDistance(@ubicacion) ASC;
+	order by @ubicacion.STDistance(geography::STGeomFromText('POINT('+CAST(ubicacionLat as VARCHAR)+' '+CAST(ubicacionLong as VARCHAR)+')',4326)) ASC;
 end
 go
 
@@ -68,14 +68,14 @@ as begin
     where C.id='+CAST(@uid as varchar)+''')';
 	declare @talbe table(id int,telefono varchar(16), tel_descripcion varchar(20), correo varchar(50), cor_descripcion varchar(20));
 	insert into @talbe EXEC (@query);
-	select distinct T.id, C.nombre, C.apellidos, T.telefono, T.tel_descripcion, T.correo, T.cor_descripcion, C.ubicacion.Lat as Lat, C.ubicacion.Long as Long, C.idMetodoPago, C.descripcion as met_descripcion
+	select distinct T.id, C.nombre, C.apellidos, T.telefono, T.tel_descripcion, T.correo, T.cor_descripcion, C.ubicacionLat as Lat, C.ubicacionLong as Long, C.idMetodoPago, C.descripcion as met_descripcion
 	from @talbe T
 	inner join (
-		select C.idCliente,C.nombre,C.apellidos,C.ubicacion,M.idMetodoPago,M.descripcion from [SucursalA].[dbo].[Cliente] C left outer join [SucursalA].[dbo].[MetodoPago] M on M.idCliente=C.idCliente where C.idCliente = @uid
+		select C.idCliente,C.nombre,C.apellidos,C.ubicacionLat,C.ubicacionLong,M.idMetodoPago,M.descripcion from [SucursalA].[dbo].[Cliente] C left outer join [SucursalA].[dbo].[MetodoPago] M on M.idCliente=C.idCliente where C.idCliente = @uid
 		UNION ALL
-		select C.idCliente,C.nombre,C.apellidos,C.ubicacion,M.idMetodoPago,M.descripcion from [SucursalB].[dbo].[Cliente] C left outer join [SucursalB].[dbo].[MetodoPago] M on M.idCliente=C.idCliente where C.idCliente = @uid
+		select C.idCliente,C.nombre,C.apellidos,C.ubicacionLat,C.ubicacionLong,M.idMetodoPago,M.descripcion from [SucursalB].[dbo].[Cliente] C left outer join [SucursalB].[dbo].[MetodoPago] M on M.idCliente=C.idCliente where C.idCliente = @uid
 		UNION ALL
-		select C.idCliente,C.nombre,C.apellidos,C.ubicacion,M.idMetodoPago,M.descripcion from [SucursalC].[dbo].[Cliente] C left outer join [SucursalC].[dbo].[MetodoPago] M on M.idCliente=C.idCliente where C.idCliente = @uid
+		select C.idCliente,C.nombre,C.apellidos,C.ubicacionLat,C.ubicacionLong,M.idMetodoPago,M.descripcion from [SucursalC].[dbo].[Cliente] C left outer join [SucursalC].[dbo].[MetodoPago] M on M.idCliente=C.idCliente where C.idCliente = @uid
 	) as C on T.id=C.idCliente;
 end
 go

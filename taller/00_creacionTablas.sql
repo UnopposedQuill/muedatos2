@@ -13,7 +13,8 @@ go
 create table [dbo].[Sucursal](
 	id int identity(1,1) primary key,
 	nombre varchar(30) not null,
-	ubicacion geography not null
+	ubicacionLat float NOT NULL,
+	ubicacionLong float NOT NULL
 );
 go
 

@@ -2,8 +2,8 @@ use SucursalC;
 go
 
 --clientes
-INSERT INTO [dbo].[Cliente] ([nombre],[apellidos],[ubicacion],[direccion])
-SELECT nombre as nombre, apellidos as apellidos, geography::STGeomFromText('POINT('+CAST(RAND()*120 as VARCHAR)+' '+CAST(RAND()*90 as VARCHAR)+')',4326) as ubicacion, '' as direccion from openquery(MYSQL,'select * from Cliente')
+INSERT INTO [dbo].[Cliente] ([nombre],[apellidos],[ubicacionLat],[ubicacionLong],[direccion])
+SELECT nombre as nombre, apellidos as apellidos, RAND()*120 as ubicacionLat, RAND()*90 as ubicacionLong, '' as direccion from openquery(MYSQL,'select * from Cliente')
 GO
 
 insert into dbo.Puesto (descripcion) values ('Sistema')
