@@ -1,4 +1,4 @@
-USE SucursalA
+USE SucursalC
 go
 
 create or alter procedure [dbo].[spFacturar](

@@ -20,5 +20,6 @@ urlpatterns = [
     path('',include('Login.urls')),
     path('compra/',include('Compra.urls')),
     path('cat/',include('Catalogo.urls')),
+    path('eval/',include('Evaluacion.urls')),
     path('admin/', admin.site.urls),
 ]

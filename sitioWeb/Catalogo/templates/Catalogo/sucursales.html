@@ -9,5 +9,12 @@
         {% for sucursal in sucursales %}
         <a href="{% url 'catalogo' uid sucursal.0 %}">Sucursal {{sucursal.1}}</a><br>
         {% endfor %}
+    <h1>Evaluar pedido previo</h1>
+    <p>Ingrese el id de un pedido, tiene la siguiente forma <code>numero:numero</code></p>
+        <form action="{% url 'evaluar' uid %}">
+            <label for="vid">ID Pedido</label>
+            <input type="text" name="vid" id="vid">
+            <input type="submit" value="Evaluar">
+        </form>
     </body>
 </html>

@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'Evaluacion.apps.EvaluacionConfig',
     'Cliente.apps.ClienteConfig',
     'Taller.apps.TallerConfig',
     'SucursalA.apps.SucursalaConfig',

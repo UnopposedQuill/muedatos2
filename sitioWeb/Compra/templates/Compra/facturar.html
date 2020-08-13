@@ -5,10 +5,12 @@
     </head>
     <body>
     {% if code is 200 %}
-        <p>La compra se ha realizado de manera exitosa, puede realizar una evaluacion del producto cuando lo reciba desde la pagina principal usando el codigo {{id}}</p>
+        <p>La compra se ha realizado de manera exitosa, puede realizar una evaluacion del producto cuando lo reciba desde la pagina principal usando el codigo <code>{{sid}}:{{id}}</code></p>
     {% else %}
         <p>Ha ocurrido un error en la compra, por favor vease para mas detalle</p>
     {% endif %}
-    <div id="detalle">{{detalle}}</div>
+    <div id="detalle">
+        <code>{{detalle}}</code>
+    </div>
     </body>
 </html>

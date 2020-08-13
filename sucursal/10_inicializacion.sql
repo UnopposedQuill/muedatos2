@@ -1,4 +1,4 @@
-use SucursalA;
+use SucursalC;
 go
 
 --clientes
