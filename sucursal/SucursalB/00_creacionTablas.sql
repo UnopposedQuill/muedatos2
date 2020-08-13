@@ -32,6 +32,7 @@ CREATE TABLE dbo.Empleado (
 	fechaContratacion DATE NOT NULL,
 	foto varchar(MAX) NOT NULL,
 	salario float NOT NULL,
+	comision float NOT NULL,
 	CONSTRAINT FK_Empleado_Puesto
 		FOREIGN KEY (idPuesto)
 		REFERENCES dbo.Puesto (idPuesto)
@@ -56,6 +57,7 @@ CREATE TABLE dbo.Venta (
 	idMetodoPago INT NOT NULL,
 	fechaVenta DATE NOT NULL,
 	reciboConforme XML NULL,
+	porcentajeComision float NOT NULL,
 	CONSTRAINT FK_Venta_Empleado
 		FOREIGN KEY (idEmpleado)
 		REFERENCES dbo.Empleado (idEmpleado),

@@ -5,7 +5,7 @@ create or alter procedure [dbo].[spFacturar](
 	@uid int, --user id
 	@sid int, --sucursal id
 	@mid int, -- metodo de pago del cliente
-	@lista varchar(max), --lista de productos separada por coma
+	@lista varchar(max), --lista de productos separada por coma: '1,2,1,1,4'
 	@cip int = NULL, --cupon id (si se usa algun cupon)
 	@eip int = 1 --id empleado, 1 es el sistema (venta en linea), valor por defecto
 )
@@ -14,8 +14,9 @@ as begin
 	BEGIN TRANSACTION;
 	BEGIN TRY
 
-		insert into [dbo].[Venta] (idEmpleado,idCliente,idMetodoPago,fechaVenta,reciboConforme)
-		values (@eip,@uid,@mid,GETDATE(),null)
+		insert into [dbo].[Venta] (idEmpleado,idCliente,idMetodoPago,fechaVenta,reciboConforme,porcentajeComision)
+		select @eip,@uid,@mid,GETDATE(),null,E.comision
+		from dbo.Empleado E where @eip=E.idEmpleado;
 
 		declare @venta int
 		set @venta = SCOPE_IDENTITY()

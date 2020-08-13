@@ -14,8 +14,9 @@ as begin
 	BEGIN TRANSACTION;
 	BEGIN TRY
 
-		insert into [dbo].[Venta] (idEmpleado,idCliente,idMetodoPago,fechaVenta,reciboConforme)
-		values (@eip,@uid,@mid,GETDATE(),null)
+		insert into [dbo].[Venta] (idEmpleado,idCliente,idMetodoPago,fechaVenta,reciboConforme,porcentajeComision)
+		select @eip,@uid,@mid,GETDATE(),null,E.comision
+		from dbo.Empleado E where @eip=E.idEmpleado;
 
 		declare @venta int
 		set @venta = SCOPE_IDENTITY()

@@ -199,26 +199,26 @@ create or alter procedure spConsultarGanacias(
 	@pid int = null, @sid int = null, @finicio date = null, @ffin date = null
 )
 as begin
-	declare @venta table(idSucursal int, idVenta int, fechaVenta date, idProducto int, precio float);
+	declare @venta table(idSucursal int, idVenta int, fechaVenta date, idProducto int, precio float,porcentajeComision float);
 	insert into @venta
-		select 1 as idSucursal, V.idVenta, V.fechaVenta, L.idProducto, L.precio
+		select 1 as idSucursal, V.idVenta, V.fechaVenta, L.idProducto, L.precio,V.porcentajeComision
 		from [SucursalA].[dbo].[Venta] V
 		inner join [SucursalA].[dbo].[LineaVenta] L on V.idVenta = L.idVenta
 		where L.idProducto = ISNULL(@pid,L.idProducto)
 			and V.fechaVenta BETWEEN ISNULL(@finicio,V.fechaVenta) and ISNULL(@ffin,V.fechaVenta)
 		UNION all
-		select 2 as idSucursal, V.idVenta, V.fechaVenta, L.idProducto, L.precio
+		select 2 as idSucursal, V.idVenta, V.fechaVenta, L.idProducto, L.precio,V.porcentajeComision
 		from [SucursalB].[dbo].[Venta] V
 		inner join [SucursalB].[dbo].[LineaVenta] L on V.idVenta = L.idVenta
 		where L.idProducto = ISNULL(@pid,L.idProducto)
 			and V.fechaVenta BETWEEN ISNULL(@finicio,V.fechaVenta) and ISNULL(@ffin,V.fechaVenta)
 		union all
-		select 3 as idSucursal, V.idVenta, V.fechaVenta, L.idProducto, L.precio
+		select 3 as idSucursal, V.idVenta, V.fechaVenta, L.idProducto, L.precio,V.porcentajeComision
 		from [SucursalC].[dbo].[Venta] V
 		inner join [SucursalC].[dbo].[LineaVenta] L on V.idVenta = L.idVenta
 		where L.idProducto = ISNULL(@pid,L.idProducto)
 			and V.fechaVenta BETWEEN ISNULL(@finicio,V.fechaVenta) and ISNULL(@ffin,V.fechaVenta)
-	SELECT idSucursal as Sucursal, idVenta as Venta, fechaVenta as Fecha, idProducto, SUM(precio) as Ganancia
+	SELECT idSucursal as Sucursal, idVenta as Venta, fechaVenta as Fecha, idProducto, SUM(precio) as Neto, SUM(precio*(100-porcentajeComision)/100) as Ganancia
 	FROM @venta where idSucursal = ISNULL(@sid,idSucursal)
 	GROUP BY ROLLUP(idSucursal, idVenta, fechaVenta, idProducto)
 end
