@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Evaluacion de pedido</title>
+        <script>
+            const load = ()=>{
+                evaluacion = "{{evaluacion}}";
+                evaluacion = evaluacion.replace(/&apos;/g, "'")
+                                       .replace(/&quot;/g, '"')
+                                       .replace(/&gt;/g, '>')
+                                       .replace(/&lt;/g, '<')
+                                       .replace(/&amp;/g, '&');
+                console.log(evaluacion);
+                let parser = new DOMParser();
+                evaluacion = parser.parseFromString(evaluacion,'application/xml');
+                console.log(evaluacion);
+                if(evaluacion.documentElement.nodeName=='parsererror'){
+                    document.getElementById('evaluacion').innerHTML="<p>Error recuperando el detalle del pedido, por favor intente mas tarde</p>"
+                } else {
+                    let child = document.createElement('button');
+                    child.id="crearLista";
+                    child.onclick=eload;
+                    child.innerHTML="Evaluar Productos";
+                    document.getElementById('evaluacion').appendChild(child);
+                }
+            }
+            window.onload = load;
+            function eload(){
+                document.getElementById('crearLista').style.display='none';
+                for(prod of evaluacion.getElementsByTagName('prod')){
+                    let prodDiv = document.createElement('div');
+                    let prodN = document.createElement('input');
+                        prodN.type = "hidden";
+                        prodN.value = prod.childNodes[0].innerHTML;
+                        prodN.name = 'n'+prod.id;
+                    let prodIn = document.createElement('input');
+                        prodIn.type = "text";
+                        prodIn.value = prod.childNodes[1].innerHTML;
+                        prodIn.id = prodIn.name = 'p'+prod.id;
+                    let prodLabel = document.createElement('label');
+                        prodLabel.innerHTML = prod.childNodes[0].innerHTML;
+                        prodLabel.for = 'p'+prod.id;
+                    prodDiv.appendChild(prodLabel);
+                    prodDiv.appendChild(prodIn);
+                    prodDiv.appendChild(prodN);
+                    document.getElementById('eform').appendChild(prodDiv);
+                }
+                let sub = document.createElement('input');
+                sub.type="submit";
+                sub.value="Enviar Evaluacion";
+                document.getElementById('eform').appendChild(sub);
+            }
+        </script>
+    </head>
+    <body>
+        <div>
+            <h1>Evaluacion del pedido {{sid}}:{{vid}}</h1>
+            <p>ID: {{sid}}:{{vid}}</p>
+            <p>Metodo de Pago: {{metodoPago}}</p>
+            <p>Fecha: {{fecha}}</p>
+        </div>    
+        <div id="evaluacion">
+            <form action="{% url 'enviarevaluacion' uid %}" method="post" id="eform">
+                {% csrf_token %}
+                <input type="hidden" name="vid" value="{{vid}}">
+                <input type="hidden" name="sid" value="{{sid}}">
+            </form>
+        </div>
+    </body>
+</html>

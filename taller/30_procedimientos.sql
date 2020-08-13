@@ -104,4 +104,55 @@ as begin
 end
 go
 
-exec spFacturarWeb 1,1,1,'1,2'
+create or alter procedure [dbo].[spGetInformacionVenta](
+	@uid int, @sid int, @vid int
+)
+as begin
+	SET NOCOUNT ON
+	declare @venta table(idVenta int, idEmpleado int, idCliente int, descripcion varchar(20), fechaVenta date, reciboConforme XML, idProducto int, nombre varchar(30), precio float);
+	if @sid=1
+		insert into @venta
+		select V.idVenta, V.idEmpleado, V.idCliente, M.descripcion, V.fechaVenta, V.reciboConforme, L.idProducto,P.nombre, L.precio
+		from [SucursalA].[dbo].[Venta] V
+		inner join [SucursalA].[dbo].[LineaVenta] L on V.idVenta = L.idVenta
+		inner join [Taller].[dbo].[Producto] P on L.idProducto=P.id
+		inner join [SucursalA].[dbo].[MetodoPago] M on V.idMetodoPago=M.idMetodoPago
+		where V.idVenta = @vid and V.idCliente = @uid
+	else if @sid=2
+		insert into @venta
+		select V.idVenta, V.idEmpleado, V.idCliente, M.descripcion, V.fechaVenta, V.reciboConforme, L.idProducto, P.nombre, L.precio
+		from [SucursalB].[dbo].[Venta] V
+		inner join [SucursalB].[dbo].[LineaVenta] L on V.idVenta = L.idVenta
+		inner join [Taller].[dbo].[Producto] P on L.idProducto=P.id
+		inner join [SucursalB].[dbo].[MetodoPago] M on V.idMetodoPago=M.idMetodoPago
+		where V.idVenta = @vid and V.idCliente = @uid
+	else if @sid=3
+		insert into @venta
+		select V.idVenta, V.idEmpleado, V.idCliente, M.descripcion, V.fechaVenta, V.reciboConforme, L.idProducto,P.nombre, L.precio
+		from [SucursalB].[dbo].[Venta] V
+		inner join [SucursalB].[dbo].[LineaVenta] L on V.idVenta = L.idVenta
+		inner join [Taller].[dbo].[Producto] P on L.idProducto=P.id
+		inner join [SucursalB].[dbo].[MetodoPago] M on V.idMetodoPago=M.idMetodoPago
+		where V.idVenta = @vid and V.idCliente = @uid
+	SELECT idVenta as Venta, idEmpleado as Empleado, idCliente as Cliente, descripcion as Pago, fechaVenta as Fecha, reciboConforme as Recibo, idProducto, nombre as Producto, precio as Precio  FROM @venta
+end
+go
+
+create or alter procedure spEvaluarVenta(
+	@uid int, @sid int, @vid int, @xml xml
+)
+as begin
+	if @sid=1
+		update [SucursalA].[dbo].[Venta]
+		set reciboConforme = @xml
+		where idVenta=@vid and idCliente=@uid
+	else if @sid=2
+		update [SucursalB].[dbo].[Venta]
+		set reciboConforme = @xml
+		where idVenta=@vid and idCliente=@uid
+	else if @sid=3
+		update [SucursalC].[dbo].[Venta]
+		set reciboConforme = @xml
+		where idVenta=@vid and idCliente=@uid
+end
+go
