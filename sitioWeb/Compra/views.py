@@ -32,7 +32,7 @@ def facturar(request,uid=0,sid=0):
         with connections['taller'].cursor() as cursor: #coneccion a taller
             cursor.execute("EXEC [dbo].[spFacturarWeb] %s, %s, %s, %s",[uid,sid,mid,','.join(','.join([str(k)]*n) for k,n in list(carrito.items()))]);
             row = cursor.fetchone(); #id,code,detalle retorno
-            context = {'id':row[0],'code':row[1],'detalle':row[2]};
+            context = {'id':row[0],'code':row[1],'detalle':row[2],'sid':sid};
             return render(request,'Compra/facturar.html',context);
     else:
         return redirect('sucursales',uid=uid,permanent=True);

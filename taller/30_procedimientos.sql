@@ -129,10 +129,10 @@ as begin
 	else if @sid=3
 		insert into @venta
 		select V.idVenta, V.idEmpleado, V.idCliente, M.descripcion, V.fechaVenta, V.reciboConforme, L.idProducto,P.nombre, L.precio
-		from [SucursalB].[dbo].[Venta] V
-		inner join [SucursalB].[dbo].[LineaVenta] L on V.idVenta = L.idVenta
+		from [SucursalC].[dbo].[Venta] V
+		inner join [SucursalC].[dbo].[LineaVenta] L on V.idVenta = L.idVenta
 		inner join [Taller].[dbo].[Producto] P on L.idProducto=P.id
-		inner join [SucursalB].[dbo].[MetodoPago] M on V.idMetodoPago=M.idMetodoPago
+		inner join [SucursalC].[dbo].[MetodoPago] M on V.idMetodoPago=M.idMetodoPago
 		where V.idVenta = @vid and V.idCliente = @uid
 	SELECT idVenta as Venta, idEmpleado as Empleado, idCliente as Cliente, descripcion as Pago, fechaVenta as Fecha, reciboConforme as Recibo, idProducto, nombre as Producto, precio as Precio  FROM @venta
 end

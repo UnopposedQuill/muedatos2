@@ -5,8 +5,10 @@ from django.db import connection, connections
 def evaluar(request,uid):
     with connections['taller'].cursor() as cursor: #coneccion a taller
         vid = request.GET['vid'];
+        print('vid',vid);
         sid = int(vid.split(':')[0]);
         vid = int(vid.split(':')[1]);
+        print(uid,sid,vid);
         cursor.execute('EXEC [dbo].[spGetInformacionVenta] %s,%s,%s',[uid,sid,vid]);
         colname = [col[0] for col in cursor.description];
         rows = [dict(zip(colname,row)) for row in cursor.fetchall()];
