@@ -21,7 +21,7 @@ def catalogo(request,uid=0,sid=0):
         rows = [dict(zip(colname,row)) for row in cursor.fetchall()];
         context['productos'] = [(x,y,z) for x,y,z in zip(rows[::3],rows[1::3],rows[2::3])]
         if len(rows)%3 == 1: context['productos'] += [ (rows[-1],None,None) ];
-        if len(rows)%3 == 2: context['productos'] += [ (rows[-2],rows[-1],None,None) ];
+        if len(rows)%3 == 2: context['productos'] += [ (rows[-2],rows[-1],None) ];
     return render(request,'Catalogo/catalogo.html',context);
 
 def carrito(request,uid=0,sid=0):
