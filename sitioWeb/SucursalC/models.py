@@ -23,6 +23,7 @@ class SCEmpleado(models.Model):
     fechacontratacion = models.DateField(db_column='fechaContratacion')  # Field name made lowercase.
     foto = models.TextField()
     salario = models.FloatField()
+    comision = models.FloatField()
 
     class Meta:
         managed = False

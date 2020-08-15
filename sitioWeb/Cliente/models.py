@@ -29,7 +29,7 @@ class ACCupon(models.Model):
     idcliente = models.ForeignKey(ACCliente, models.DO_NOTHING, db_column='idCliente', blank=True, null=True)  # Field name made lowercase.
     idsucursal = models.IntegerField(db_column='idSucursal', blank=True, null=True)  # Field name made lowercase.
     fechaentrega = models.DateField(db_column='fechaEntrega', blank=True, null=True)  # Field name made lowercase.
-    dechavencimiento = models.DateField(db_column='dechaVencimiento', blank=True, null=True)  # Field name made lowercase.
+    fechavencimiento = models.DateField(db_column='fechaVencimiento', blank=True, null=True)  # Field name made lowercase.
     utilizado = models.TextField(blank=True, null=True)  # This field type is a guess.
 
     class Meta:
