@@ -84,6 +84,7 @@ end
 go
 exec spGetInfoCliente 8;
 
+go
 create or alter procedure [dbo].[spFacturarWeb](
 	@uid int, --user id
 	@sid int, --sucursal id

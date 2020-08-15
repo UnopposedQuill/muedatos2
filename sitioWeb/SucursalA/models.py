@@ -5,7 +5,8 @@ class SACliente(models.Model):
     idcliente = models.AutoField(db_column='idCliente', primary_key=True)  # Field name made lowercase.
     nombre = models.CharField(max_length=30)
     apellidos = models.CharField(max_length=30)
-    ubicacion = models.TextField()  # This field type is a guess.
+    ubicacionLat = models.FloatField()  # This field type is a guess.
+    ubicacionLong = models.FloatField()  # This field type is a guess.
     direccion = models.CharField(max_length=120)
 
     class Meta:

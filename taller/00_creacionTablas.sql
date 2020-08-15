@@ -65,3 +65,6 @@ create table dbo.ColaboradorProducto(
 	idEmpleado int not null constraint FK_Colaboradores_X_Empleado foreign key (idEmpleado) references dbo.Empleado (id)
 );
 go
+
+use master
+go

@@ -142,8 +142,8 @@ DATABASES = {
     'atencionCliente': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'atencioncliente',
-        'USER': 'mabo',
-        'PASSWORD': 'mueDatos2',
+        'USER': 'root',
+        'PASSWORD': 'Black09Rift',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     },
